@@ -1,3 +1,3 @@
-<h1>Health Monitor</h1>
+<h1>Lifely</h1>
 
 Lets stay healthy.
