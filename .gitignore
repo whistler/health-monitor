@@ -1,3 +1,6 @@
 *.exe
 platforms/*
 plugins/*
+!platforms/.gitkeep
+!plugins/.gitkeep
+*~
