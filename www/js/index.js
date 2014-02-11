@@ -1,3 +1,53 @@
+angular.module('lifelyCordova', [])
+.service('CordovaService', ['$document', '$q',
+  function($document, $q) {
+
+    var d = $q.defer(),
+        resolved = false;
+
+    var self = this;
+    this.ready = d.promise;
+
+    document.addEventListener('deviceready', function() {
+      resolved = true;
+      d.resolve(window.cordova);
+    });
+
+    // Check to make sure we didn't miss the 
+    // event (just in case)
+    setTimeout(function() {
+      if (!resolved) {
+        if (window.cordova) d.resolve(window.cordova);
+      }
+    }, 3000);
+}]);
+var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute']);
+lifely.controller('LifelyController', 
+  function($scope, CordovaService) {
+    CordovaService.ready.then(function() {
+      navigator.notification.alert("Welcome to app. Dialog poc");
+    });
+});
+lifely.controller('HomeController', 
+  function($scope) {
+ //    navigator.notification.alert("Home page");
+});
+lifely.controller('LoginController', 
+  function($scope) {
+ //    navigator.notification.alert("Login page");
+});
+lifely.controller('SettingsController', 
+  function($scope) {
+  //  navigator.notification.alert("Settings page");
+});
+ lifely.config(['$routeProvider',function($routeProvider) {
+  $routeProvider.when('/', {templateUrl: 'home.html',controller  : 'HomeController'})
+                .when('/login', {templateUrl: 'login.html',controller  : 'LoginController'})
+                .when('/settings/', {templateUrl: 'login.html',controller  : 'SettingsController'})
+				.otherwise({ redirectTo: '/'});
+}]);
+
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -33,17 +83,9 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+   
+      angular.bootstrap(document, ['lifelyApp']);
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
     }
+    
 };
