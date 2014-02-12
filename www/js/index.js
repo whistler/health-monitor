@@ -21,7 +21,7 @@ angular.module('lifelyCordova', [])
       }
     }, 3000);
 }]);
-var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute']);
+var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute', 'ngAnimate']);
 lifely.controller('LifelyController', 
   function($scope, CordovaService) {
     CordovaService.ready.then(function() {
