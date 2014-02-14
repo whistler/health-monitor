@@ -43,7 +43,7 @@ lifely.controller('SettingsController',
  lifely.config(['$routeProvider',function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'home.html',controller  : 'HomeController'})
                 .when('/login', {templateUrl: 'login.html',controller  : 'LoginController'})
-                .when('/settings/', {templateUrl: 'login.html',controller  : 'SettingsController'})
+                .when('/settings/', {templateUrl: 'settings.html',controller  : 'SettingsController'})
 				.otherwise({ redirectTo: '/'});
 }]);
 
