@@ -20,7 +20,7 @@ OAuthService.prototype.clone = function(extra_parameters) {
  * Request for the token.
  * Return the jqXHR for handling the sent ajax
  */
-OAuthService.prototype.makeOAuthRequest = function(method, url, /*callback, */extra_parameters, token) {
+OAuthService.prototype.makeOAuthRequest = function(method, url, /*callback,*/ extra_parameters, token) {
 	extra_parameters = extra_parameters || {};
 	token = token || {};
 	var realm = this.realm;
@@ -33,15 +33,16 @@ OAuthService.prototype.makeOAuthRequest = function(method, url, /*callback, */ex
 		consumerKey: this.consumerKey,
 		consumerSecret: this.consumerSecret
 	};
-	if (token.token) {
-		message.parameters.oauth_token = token.token;
-		accessor.token = token.token;
+	if (token.oauth_token) {
+		message.parameters.oauth_token = token.oauth_token;
+		accessor.token = token.oauth_token;
 	}
-	if (token.tokenSecret) {
-		accessor.tokenSecret = token.tokenSecret;
+	if (token.oauth_token_secret) {
+		accessor.tokenSecret = token.oauth_token_secret;
 	}
 	
 	OAuth.completeRequest(message, accessor);
+
 
 	var jqXHR = jQuery.ajax({
 					type: method,
@@ -56,9 +57,9 @@ OAuthService.prototype.makeOAuthRequest = function(method, url, /*callback, */ex
 }
 
 /*
- * Get the Request token from the response text, as well as the token secret
+ * Get the returned token from the response text, as well as the token secret
  * Return an object the holds two attributes: oauth_token, oauth_token_secret
  */
- OAuthService.prototype.getRequestToken = function(responseText) {
+ OAuthService.prototype.getToken = function(responseText) {
 	return OAuth.getParameterMap(OAuth.decodeForm(responseText));
  }

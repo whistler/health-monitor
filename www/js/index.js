@@ -40,24 +40,71 @@ lifely.controller('LoginController',
 		/* Get the filled email and password */
 		var email = jq('#userName').val();
 		var password = jq('#password').val();
-		/* step1: ask for the token */
+		/* STEP 1: ask for the token */
 		var oauthSev = new OAuthService();
 		var jqXHR = oauthSev.makeOAuthRequest('POST', "http://api.fitbit.com/oauth/request_token");
 		jqXHR.done(function(response) {
-					 var tokenObj = OAuthService.prototype.getRequestToken(response);
-					 /* step2: redirects to Fitbit's page for authorization */
-					 var redirectURL = "https://www.fitbit.com/oauth/authenticate?oauth_token=" + tokenObj.oauth_token + "&display=touch";
+					 var tokenObj = oauthSev.getToken(response);
+					 /* STEP 2: redirects to Fitbit's page for authorization */
+					 //var redirectURL = "#settings";
+					 var redirectURL = "https://www.fitbit.com/oauth/authenticate?oauth_token=" + tokenObj.oauth_token + "&display=touch&requestCredentials=true";
 					 /* insert an iframe to display the page */
 					 var iframe = jq('<iframe></iframe>', {'src': redirectURL});
 					 iframe.css({'width': '100%', 'height': '100%', 'border': 'none'});
 					 iframe.load(function(){
-						/* fill the email and password for the user */
-						 var emails_iframe = iframe.contents().find('#email');
-						 alert(emails_iframe.length);
-						 if (emails_iframe.length > 0) {
-							 emails_iframe.val(email);
-							 iframe.contents().find('#password').val(password);
+						 if (this.contentWindow.location == "https://www.fitbit.com/oauth") {
+							// redirection finished
+							var pins = iframe.contents().find('.pin');
+							if (pins.length > 0) {
+								// authorization successfully
+								var pin = pins.html();
+								/* STEP 3: ask for access token */
+								var extraParams = {};
+								extraParams.oauth_verifier = pin;
+								var jqXHR_access = oauthSev.makeOAuthRequest('POST', "http://api.fitbit.com/oauth/access_token", extraParams, tokenObj);
+								jqXHR_access.done(function(res) {
+									if (typeof(res) === "string") {
+										var accessTokenObj = oauthSev.getToken(res);
+										jq('.loginContainer').html("<p>Access token: " + accessTokenObj.oauth_token + "</p>");
+										/*****************  The oauth_token should be stored as we will use this token to access the resource
+										                    every time without authentication again and again                                 *****************/
+										/**** AUTHENTICATION FINISHED ****/
+										jq('.loginContainer').html("<p>Login Successfully!</p>");
+										/* test accessing resources */
+										var jqXHR_resource = oauthSev.makeOAuthRequest('GET', "http://api.fitbit.com/1/user/-/profile.json", {}, accessTokenObj);
+										jqXHR_resource.done(function(jsonData) {
+											var jsonStr = JSON.stringify(jsonData, null, 4);
+											jq('.loginContainer').append("<p>" + jsonStr + "</p>");
+										})
+										.fail(function(jqXHR_f, textStatus) {
+											alert('Fail to get resource');
+											alert(jqXHR_f.responseText);
+										});
+
+									} else {
+										alert('Fail to get access token: verifier, temporary token & scret may be invalid'); 
+									}
+									
+								})
+								.fail(function(jqXHR_f, textStatus) {
+									alert('Fail to get access token');
+									alert(jqXHR_f.responseText);
+								});
+
+							} else {
+								// authorization fails
+								// user provides invalid username or password or she denied access
+								alert('fail to authorize');
+							}
+						 } else {
+							 /* fill the email and password for the user */
+							 var emails_iframe = iframe.contents().find('#email');
+							 if (emails_iframe.length > 0) {
+								 emails_iframe.val(email);
+								 iframe.contents().find('#password').val(password);
+							 }
 						 }
+						
 					 });
 					 jq('.loginContainer').css('height', '100%');
 					 jq('.loginContainer').html(iframe);
@@ -65,7 +112,7 @@ lifely.controller('LoginController',
 					 
 				})
 				.fail(function(jqXHR, textStatus) {
-					alert('fail!');
+					alert('Fail to get temporary token.');
 					alert(jqXHR.responseText);
 				});
 
