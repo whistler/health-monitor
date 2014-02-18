@@ -1,3 +1,4 @@
+var jq = $.noConflict();
 angular.module('lifelyCordova', [])
 .service('CordovaService', ['$document', '$q',
   function($document, $q) {
@@ -35,6 +36,54 @@ lifely.controller('HomeController',
 lifely.controller('LoginController', 
   function($scope) {
  //    navigator.notification.alert("Login page");
+	 $scope.submit = function() {
+		/* Get the filled email and password */
+		var email = jq('#userName').val();
+		var password = jq('#password').val();
+		/* step1: ask for the token */
+		var oauthSev = new OAuthService();
+		var jqXHR = oauthSev.makeOAuthRequest('POST', "http://api.fitbit.com/oauth/request_token");
+		jqXHR.done(function(response) {
+					 var tokenObj = OAuthService.prototype.getRequestToken(response);
+					 /* step2: redirects to Fitbit's page for authorization */
+					 var redirectURL = "https://www.fitbit.com/oauth/authenticate?oauth_token=" + tokenObj.oauth_token + "&display=touch";
+					 /* insert an iframe to display the page */
+					 var iframe = jq('<iframe></iframe>', {'src': redirectURL});
+					 iframe.css({'width': '100%', 'height': '100%', 'border': 'none'});
+					 iframe.load(function(){
+						/* fill the email and password for the user */
+						 var emails_iframe = iframe.contents().find('#email');
+						 alert(emails_iframe.length);
+						 if (emails_iframe.length > 0) {
+							 emails_iframe.val(email);
+							 iframe.contents().find('#password').val(password);
+						 }
+					 });
+					 jq('.loginContainer').css('height', '100%');
+					 jq('.loginContainer').html(iframe);
+					 
+					 
+				})
+				.fail(function(jqXHR, textStatus) {
+					alert('fail!');
+					alert(jqXHR.responseText);
+				});
+
+		/*jq.ajax({
+					type: 'GET',
+					url: "https://www.fitbit.com/oauth/authorize?display=touch",
+					crossDomain: true	
+				}).done(function(data) {
+						var container = jq('.loginContainer');
+						var preForm = container.html();
+						container.html("");
+						var iframe = jq('<iframe></iframe>').appendTo(container);;
+					});*/
+		/*var iframe = jq('<iframe src="https://www.fitbit.com/oauth/authorize?display=touch"></iframe>');
+		iframe.css({'width': '100%', 'height': '100%', 'border': 'none'});
+		jq('.loginContainer').css('height', '100%');
+		jq('.loginContainer').html(iframe);*/
+	 };
 });
 lifely.controller('SettingsController', 
   function($scope) {
