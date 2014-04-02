@@ -26,12 +26,14 @@ var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute', 'ngAnimate'])
 lifely.controller('LifelyController', 
   function($scope, CordovaService) {
     CordovaService.ready.then(function() {
-      navigator.notification.alert("Welcome to app. Dialog poc");
-    });
+      //navigator.notification.alert("Welcome to app. Dialog poc");
+	  window.plugin.notification.local.add({message: "Successfully show the notification!", autoCancel: true, title: "Welcome to Lifely!"});
+	});
 });
 lifely.controller('HomeController', 
   function($scope) {
  //    navigator.notification.alert("Home page");
+
 });
 lifely.controller('LoginController', 
   function($scope) {
@@ -77,24 +79,24 @@ lifely.controller('LoginController',
 											jq('.loginContainer').append("<p>" + jsonStr + "</p>");
 										})
 										.fail(function(jqXHR_f, textStatus) {
-											alert('Fail to get resource');
-											alert(jqXHR_f.responseText);
+											navigator.notification.alert('Fail to get resource');
+											navigator.notification.alert(jqXHR_f.responseText);
 										});
 
 									} else {
-										alert('Fail to get access token: verifier, temporary token & scret may be invalid'); 
+										navigator.notification.alert('Fail to get access token: verifier, temporary token & scret may be invalid'); 
 									}
 									
 								})
 								.fail(function(jqXHR_f, textStatus) {
-									alert('Fail to get access token');
-									alert(jqXHR_f.responseText);
+									navigator.notification.alert('Fail to get access token');
+									navigator.notification.alert(jqXHR_f.responseText);
 								});
 
 							} else {
 								// authorization fails
 								// user provides invalid username or password or she denied access
-								alert('fail to authorize');
+								navigator.notification.alert('fail to authorize');
 							}
 						 } else {
 							 /* fill the email and password for the user */
@@ -112,8 +114,8 @@ lifely.controller('LoginController',
 					 
 				})
 				.fail(function(jqXHR, textStatus) {
-					alert('Fail to get temporary token.');
-					alert(jqXHR.responseText);
+					navigator.notification.alert('Fail to get temporary token.');
+					navigator.notification.alert(jqXHR.responseText);
 				});
 
 		/*jq.ajax({

@@ -10,6 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
 	<feature name="Notification">
-    <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
-</feature>
+		<param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+	</feature>
+	
 </widget>
