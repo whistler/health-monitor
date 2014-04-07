@@ -22,7 +22,9 @@ angular.module('lifelyCordova', [])
       }
     }, 3000);
 }]);
+
 var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute', 'ngAnimate']);
+
 lifely.controller('LifelyController', 
   function($scope, CordovaService) {
     CordovaService.ready.then(function() {
@@ -35,11 +37,7 @@ lifely.controller('LifelyController',
 	  //window.plugin.notification.local.add({message: "Successfully show the notification!", autoCancel: true, title: "Welcome to Lifely!"});
 	});
 });
-lifely.controller('HomeController', 
-  function($scope) {
- //    navigator.notification.alert("Home page");
 
-});
 lifely.controller('LoginController', 
   function($scope) {
  //    navigator.notification.alert("Login page");
@@ -122,53 +120,10 @@ lifely.controller('LoginController',
 					navigator.notification.alert('Fail to get temporary token.');
 					navigator.notification.alert(jqXHR.responseText);
 				});
-
-		/*jq.ajax({
-					type: 'GET',
-					url: "https://www.fitbit.com/oauth/authorize?display=touch",
-					crossDomain: true	
-				}).done(function(data) {
-						var container = jq('.loginContainer');
-						var preForm = container.html();
-						container.html("");
-						var iframe = jq('<iframe></iframe>').appendTo(container);;
-					});*/
-		/*var iframe = jq('<iframe src="https://www.fitbit.com/oauth/authorize?display=touch"></iframe>');
-		iframe.css({'width': '100%', 'height': '100%', 'border': 'none'});
-		jq('.loginContainer').css('height', '100%');
-		jq('.loginContainer').html(iframe);*/
 	 };
 });
-lifely.controller('SettingsController', 
-  function($scope) {
-  //  navigator.notification.alert("Settings page");
-});
- lifely.config(['$routeProvider',function($routeProvider) {
-  $routeProvider.when('/', {templateUrl: 'home.html',controller  : 'HomeController'})
-                .when('/login', {templateUrl: 'login.html',controller  : 'LoginController'})
-                .when('/settings/', {templateUrl: 'settings.html',controller  : 'SettingsController'})
-				.otherwise({ redirectTo: '/'});
-}]);
 
 
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
     // Application Constructor
     initialize: function() {

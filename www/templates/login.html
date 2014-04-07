@@ -1,26 +1,32 @@
 <ion-view title="Login">
     <h1>Hello</h1>
-  <ion-content class="has-header padding">
+    <ion-content class="has-header padding">
     
 	<form ng-submit="submit()" role="form" class="login">
-	  <div class="form-group">
-		<label for="userName">Username</label>
-		<input type="email" class="form-control" id="userName" placeholder="Username">
-	  </div>
-	  <div class="form-group">
-		<label for="password">Password</label>
-		<input type="password" class="form-control" id="password" placeholder="Password">
-	  </div>
+        
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input id="userName" type="email" placeholder="Username">
+            </label>
+            <label class="item item-input">
+                <input id="password" type="password" placeholder="Password">
+            </label>
+        
 	 
-	  <div class="checkbox">
-		<label>
-		  <input type="checkbox"> Remember me
-		</label>
-	  </div>
-	  <button type="submit" class="btn btn-default">Login</button>
+            <li class="item item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox">
+                </label>
+                Remember me
+            </li>
+
+            <button type="submit" class="item item-input button button-block button-positive">
+                Login
+            </button>
+        </div>
 	</form>
     
-  </ion-content>
+    </ion-content>
 </ion-view>
 
 
