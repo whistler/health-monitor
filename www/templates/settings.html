@@ -5,15 +5,19 @@
 
       <a class="item item-icon-left" ui-sref='tab.login'>
         <i class="icon ion-person"></i>
-        Account
+        Profile
       </a>
 
-      <li class="item item-icon-left" href="#">
+      <li class="item item-icon-left" ui-sref='tab.refreshInterval'>
         <i class="icon ion-loop"></i>
         Refresh Interval
-        <span class="item-note">
-        1 hour
-        </span>
+        <select class="item-note">
+			<option>1 min</option>
+			<option>5 mins</option>
+			<option>30 mins</option>
+		    <option>1 hour</option>
+		    <option selected>1 day</option>
+		</select>
       </li>
   
       <li class="item item-icon-left item-toggle">

@@ -28,19 +28,16 @@ var lifely=angular.module('lifelyApp', ['lifelyCordova','ngRoute', 'ngAnimate'])
 lifely.controller('LifelyController', 
   function($scope, CordovaService) {
     CordovaService.ready.then(function() {
-      //navigator.notification.alert("Welcome to app. Dialog poc");
 	  var myDataRef = new Firebase('https://taycwf2hnde.firebaseio-demo.com/userData');
 	  myDataRef.once('value', function(snapshot) {
 		  var message = snapshot.val();
 		  window.plugin.notification.local.add({message: "Name: " + message.name + " -- Weight: " + message.weight, autoCancel: true, title: "What's in Database"});
       });
-	  //window.plugin.notification.local.add({message: "Successfully show the notification!", autoCancel: true, title: "Welcome to Lifely!"});
 	});
 });
 
 lifely.controller('LoginController', 
   function($scope) {
- //    navigator.notification.alert("Login page");
 	 $scope.submit = function() {
 		/* Get the filled email and password */
 		var email = jq('#userName').val();

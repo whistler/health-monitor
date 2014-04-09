@@ -1,28 +1,40 @@
-<ion-view title="Login">
+<ion-view title="Profile">
     <h1>Hello</h1>
     <ion-content class="has-header padding">
     
 	<form ng-submit="submit()" role="form" class="login">
-        
-        <div class="list list-inset">
-            <label class="item item-input">
-                <input id="userName" type="email" placeholder="Username">
+			
+        <div class="list">
+		<div class="item">
+           <label>
+                Gender
             </label>
-            <label class="item item-input">
-                <input id="password" type="password" placeholder="Password">
+			<label  class="item-input">
+			<ion-radio ng-model="gender" value="M">Male</ion-radio>
+			<ion-radio ng-model="gender" value="F">Female</ion-radio>
+			</label>
+			</div>
+			<div class="item  item-toggle">
+			<label>
+                Are you diabetic?
             </label>
-        
-	 
-            <li class="item item-checkbox">
-                <label class="checkbox">
-                    <input type="checkbox">
-                </label>
-                Remember me
-            </li>
-
-            <button type="submit" class="item item-input button button-block button-positive">
-                Login
-            </button>
+			<label class="toggle toggle-assertive">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+		 </div>
+		 <div class="item item-toggle" >
+			<label>
+                Hyper Tension?
+			</label>
+			<label class="toggle toggle-assertive">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
         </div>
 	</form>
     
