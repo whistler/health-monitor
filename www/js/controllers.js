@@ -1,4 +1,4 @@
-app.controller('DashCtrl', function($scope, EngineService) {
+app.controller('DashCtrl', function($scope, EngineService, NotificationService) {
     $scope.recommendations = EngineService.recommendations;
     $scope.$watch(
       function() { return EngineService.recommendations },
@@ -7,6 +7,8 @@ app.controller('DashCtrl', function($scope, EngineService) {
         $scope.recommendations = newRecommendations;
       }
     )
+    
+    NotificationService.show('hello');
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {

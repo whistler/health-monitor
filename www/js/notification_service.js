@@ -1,4 +1,4 @@
-app.factory('Notifications', function() {
+app.factory('NotificationService', function() {
 
   return {
     show: function(message) {
