@@ -1,6 +1,12 @@
-angular.module('lifelyApp.controllers', [])
-
-.controller('DashCtrl', function($scope) {
+app.controller('DashCtrl', function($scope, EngineService) {
+    $scope.recommendations = EngineService.recommendations;
+    $scope.$watch(
+      function() { return EngineService.recommendations },
+      function(newRecommendations) { 
+        console.log(newRecommendations)
+        $scope.recommendations = newRecommendations;
+      }
+    )
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {
