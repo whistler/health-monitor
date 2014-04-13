@@ -46,12 +46,12 @@ var app = angular.module('lifelyApp', ['ionic'])
         }
       }
     })
-    .state('tab.login', {
-      url: '/login',
+    .state('tab.userInfo', {
+      url: '/userInfo',
       views: {
         'tab-settings': {
-          templateUrl: 'templates/login.html',
-          controller: 'LoginCtrl'
+          templateUrl: 'templates/userInfo.html',
+          controller: 'UserInfoCtrl'
         }
       }
     })
