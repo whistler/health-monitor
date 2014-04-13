@@ -1,6 +1,10 @@
 <ion-view title="Dashboard">
   <ion-content class="has-header padding">
     <h1>Lifely</h1>
-    <h2>Lets stay healthy.</h2>
+    <div class="list">
+        <li ng-repeat="recommendation in recommendations" class="item">
+            {{ recommendation.recommendation }}
+        </li>
+    </div>
   </ion-content>
 </ion-view>
