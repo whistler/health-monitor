@@ -1,94 +1,95 @@
 <ion-view title="Profile">
     <h1>Hello</h1>
     <ion-content class="has-header padding">
-    
-	<form ng-submit="submit()" role="form" class="login">
-			
-      <div class="list">
-		<div class="item">
-           <label>
-                Hello {{userData.name}} 
-            </label>
-		</div>
-		<div class="item">
-           <label>
-                Height
-            </label>
-			<label  class="item-input">
-				<input ng-model="userData.height" type="number" >
-		</div>
-		<div class="item">
-           <label>
-                Weight
-            </label>
-			<label  class="item-input">
-				<input ng-model="userData.weight" type="number" >
-		</div>
-		<div class="item">
-           <label>
-                Gender
-            </label>
-			<label  class="item-input">
-			<label class="item item-radio">
-				<input ng-model="userData.gender" type="radio" value="M" name="gender">
-				<div class="item-content">
-				  Male
-				</div>
-				<i class="radio-icon ion-checkmark"></i>
-			</label>
-			<label class="item item-radio">
-				<input ng-model="userData.gender" type="radio" value="F" name="gender">
-				<div class="item-content">
-				  Female
-				</div>
-				<i class="radio-icon ion-checkmark"></i>
-			</label>
-			</div>
-			<div class="item  item-toggle">
-			<label>
-                Are you diabetic?
-            </label>
-			<label class="toggle toggle-assertive">
-           <input ng-model="userData.diabetes" type="checkbox">
-           <div class="track">
-             <div class="handle"></div>
+	    <form ng-submit="submit()" role="form" class="login">
+          <div class="list">
+            <div class="item">
+                <label>
+                    Hello {{userData.name}} 
+                </label>
+            </div>
+		    <div class="item">
+               <label>
+                    Height
+                </label>
+			    <label  class="item-input">
+				    <input ng-model="userData.height" type="number" >
+                </label>
+		    </div>
+		    <div class="item">
+               <label>
+                    Weight
+                </label>
+			    <label  class="item-input">
+				    <input ng-model="userData.weight" type="number" >
+                </label>
+		    </div>
+		    <div class="item">
+               <label>
+                    Gender
+                </label>
+			    <label  class="item-input">
+			    <label class="item item-radio">
+				    <input ng-model="userData.gender" type="radio" value="M" name="gender">
+				    <div class="item-content">
+				      Male
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+			    </label>
+			    <label class="item item-radio">
+				    <input ng-model="userData.gender" type="radio" value="F" name="gender">
+				    <div class="item-content">
+				      Female
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+			    </label>
+			    </div>
+		    <div class="item  item-toggle">
+			    <label>
+                    Are you diabetic?
+                </label>
+			    <label class="toggle toggle-assertive">
+               <input ng-model="userData.diabetes" type="checkbox">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+		     </div>
+		    <div class="item item-toggle" >
+			    <label>
+                   Are you suffering from hyper-tension?
+			    </label>
+			    <label class="toggle toggle-assertive">
+               <input ng-model="userData.hypertension" type="checkbox">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+		     </div>
+		    <div class="item item-toggle" >
+			    <label>
+                   Are you suffering from insomnia?
+			    </label>
+			    <label class="toggle toggle-assertive">
+               <input ng-model="userData.insomnia" type="checkbox">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+		     </div>
+		    <div class="item item-toggle" >
+			    <label>
+                   Are you suffering from cardio problems?
+			    </label>
+			    <label class="toggle toggle-assertive">
+               <input ng-model="userData.cardio" type="checkbox">
+               <div class="track">
+                 <div class="handle"></div>
+               </div>
+             </label>
+            </div>
            </div>
-         </label>
-		 </div>
-		 <div class="item item-toggle" >
-			<label>
-               Are you suffering from hyper-tension?
-			</label>
-			<label class="toggle toggle-assertive">
-           <input ng-model="userData.hypertension" type="checkbox">
-           <div class="track">
-             <div class="handle"></div>
-           </div>
-         </label>
-		 </div>
-		  <div class="item item-toggle" >
-			<label>
-               Are you suffering from insomnia?
-			</label>
-			<label class="toggle toggle-assertive">
-           <input ng-model="userData.insomnia" type="checkbox">
-           <div class="track">
-             <div class="handle"></div>
-           </div>
-         </label>
-		 </div>
-		  <div class="item item-toggle" >
-			<label>
-               Are you suffering from cardio problems?
-			</label>
-			<label class="toggle toggle-assertive">
-           <input ng-model="userData.cardio" type="checkbox">
-           <div class="track">
-             <div class="handle"></div>
-           </div>
-         </label>
-        </div>
-	</form>
+	    </form>
     </ion-content>
 </ion-view>
 
