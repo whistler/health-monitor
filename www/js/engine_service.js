@@ -72,7 +72,7 @@ app.service('EngineService', ['$http', function($http) {
   
   var _this = this;
   
-  $http.post('http://localhost:5000', testinput)
+  $http.post('http://health-engine.herokuapp.com', testinput)
     .success(function(data, status, headers, config){
       _this.recommendations = data;
       console.log(this.recommendations);
