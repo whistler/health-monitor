@@ -31,7 +31,7 @@ var app = angular.module('lifelyApp', ['ionic','firebase'])
       url: '/dash',
       views: {
         'tab-dash': {
-          templateUrl: 'templates/tab-dash.html',
+          templateUrl: 'templates/dashboard.html',
           controller: 'DashCtrl'
         }
       }
@@ -46,6 +46,7 @@ var app = angular.module('lifelyApp', ['ionic','firebase'])
         }
       }
     })
+    
     .state('tab.userInfo', {
       url: '/userInfo',
       views: {
@@ -70,4 +71,3 @@ var app = angular.module('lifelyApp', ['ionic','firebase'])
   $urlRouterProvider.otherwise('/tab/dash');
 
 });
-
