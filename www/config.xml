@@ -4,11 +4,14 @@
     <description>
       Stay Healthy!
     </description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">
+    <author email="health-monitor@googlegroups.com" href="http://getlifely.com">
       Lifely Team
     </author>
     <content src="index.html" />
     <access origin="*" />
+	<feature name="Notification">
+		<param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+	</feature>
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />

@@ -5,9 +5,10 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
       function(newRecommendations) { 
         console.log(newRecommendations)
         $scope.recommendations = newRecommendations;
+		 NotificationService.show('Test notification');
       }
     )
-    NotificationService.show('hello');
+   
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {

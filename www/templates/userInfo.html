@@ -1,13 +1,20 @@
 <ion-view title="Profile">
-    <h1>Hello</h1>
     <ion-content class="has-header padding">
-	    <form ng-submit="submit()" role="form" class="login">
+	    <form role="form" class="login">
           <div class="list">
             <div class="item">
                 <label>
                     Hello {{userData.name}} 
                 </label>
             </div>
+			<div class="item">
+               <label>
+                    Age
+                </label>
+			    <label  class="item-input">
+				    <input ng-model="userData.age" type="number" >
+                </label>
+		    </div>
 		    <div class="item">
                <label>
                     Height
