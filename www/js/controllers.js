@@ -7,7 +7,6 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
         $scope.recommendations = newRecommendations;
       }
     )
-    
     NotificationService.show('hello');
 })
 

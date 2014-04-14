@@ -25,18 +25,3 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', ['sass']);
-
-
-var wiredep = require('wiredep');
-
-gulp.task('bower', function () {
-  // When this is executed, it will run the transformation
-  // (inject the dependencies into your html)
-  wiredep({
-    directory: 'www/lib',
-    bowerJson: require('./bower.json'),
-    src: 'www/index.html',
-    ignorePath: 'www/'
-  });
-});
-
