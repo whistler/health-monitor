@@ -20,6 +20,6 @@ app.controller('DashCtrl', function($scope, EngineService) {
 .controller('SettingsCtrl', function($scope) {
 })
 
-.controller('UserInfoCtrl', function($scope) {
-    
+.controller('UserInfoCtrl', function($scope, UserInfoService) {
+     UserInfoService.$bind($scope, "userData");
 });

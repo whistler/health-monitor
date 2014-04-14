@@ -19,3 +19,7 @@ app.factory('Friends', function() {
     }
   }
 });
+app.factory("UserInfoService", ["$firebase", function($firebase) {
+    var ref = new Firebase("https://taycwf2hnde.firebaseio-demo.com/userData");
+    return $firebase(ref);
+  }]);

@@ -1,5 +1,5 @@
 
-var app = angular.module('lifelyApp', ['ionic'])
+var app = angular.module('lifelyApp', ['ionic','firebase'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
