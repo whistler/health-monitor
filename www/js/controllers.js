@@ -3,11 +3,14 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
     $scope.$watch(
       function() { return EngineService.recommendations },
       function(newRecommendations) { 
-        console.log(newRecommendations)
         $scope.recommendations = newRecommendations;
-		 NotificationService.show('Test notification');
+		    NotificationService.show('Test notification');
       }
     )
+    
+    $scope.suggestions = Object.keys(EngineService.suggestions).map(function (key) {
+      return EngineService.suggestions[key];
+    });
    
 })
 

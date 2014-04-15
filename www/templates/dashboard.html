@@ -1,10 +1,18 @@
 <ion-view title="Dashboard">
   <ion-content class="has-header padding">
-    <h1>Lifely</h1>
     <div class="list">
-        <li ng-repeat="recommendation in recommendations" class="item">
-            {{ recommendation.recommendation }}
-        </li>
+      <div class="card" ng-repeat="suggestion in suggestions">
+        <div class="item item-divider item-icon-left">
+          <i class="icon {{ suggestion.icon }}"></i>{{ suggestion.name }}
+        </div>
+        <div class="item item-text-wrap">
+          <ion-slide-box>
+            <ion-slide ng-repeat="tip in suggestion.tips">
+              <div class="box blue">{{ tip }}<br/><br/></div>
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+      </div>
     </div>
   </ion-content>
 </ion-view>

@@ -5,3 +5,4 @@ plugins/*
 !plugins/.gitkeep
 *~
 node_modules/*
+www/lib
