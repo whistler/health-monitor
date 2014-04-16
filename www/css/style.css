@@ -1,1 +1,14 @@
 /* Empty. Add your own CSS if you like */
+.trend-box {
+  display: inline-block;
+  width: 10px;
+  height: 15px;
+  margin: 1px;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+.float-right {
+  float: right;
+}

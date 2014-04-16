@@ -3,14 +3,20 @@
     <div class="list">
       <div class="card" ng-repeat="suggestion in suggestions">
         <div class="item item-divider item-icon-left">
-          <i class="icon {{ suggestion.icon }}"></i>{{ suggestion.name }}
+          <i class="icon {{ suggestion.icon }}"></i>
+          {{ suggestion.name }}
         </div>
         <div class="item item-text-wrap">
           <ion-slide-box>
             <ion-slide ng-repeat="tip in suggestion.tips">
-              <div class="box blue">{{ tip }}<br/><br/></div>
+              <div class="box blue">{{ tip }}</div>
+              <br/><br/>
             </ion-slide>
           </ion-slide-box>
+        </div>
+        <div class="item item-divider">
+            <small>Last five days:</small>
+            <trend style="float:right" data="[0, 1, 2]"></trend>
         </div>
       </div>
     </div>
