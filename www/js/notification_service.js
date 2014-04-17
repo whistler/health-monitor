@@ -11,14 +11,20 @@ app.factory("NotificationService", ["$firebase", function($firebase) {
 		password: 'teamlifely'
 	});
 	return {
-		show: function(message) {
+		show: function(message, title) {
 			var ignored_till = $firebase(ref).ignored_till;
 			//alert("ignored_till: " + ignored_till);
 			if (ignored_till < 0 || new Date().getTime() < ignored_till) {
 				// if ignored_till < 0, the notification is ignored forever
 				return;
 			}
-			window.plugin.notification.local.add({message: message, autoCancel: true});
+			if ( !message ) {
+				message = "";
+			}
+			if ( !title ) {
+				title = "";
+			}
+			window.plugin.notification.local.add({message: message, title: title, autoCancel: true});
 		},
 		/**
 		  * Sets the ignored_till
