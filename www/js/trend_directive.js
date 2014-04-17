@@ -6,16 +6,15 @@ app.controller('TrendController', ['$scope', function($scope) {
       restrict: 'E',
       link: function ($scope, element, attrs) {
 
-        var colors = {
+        var colours = {
           0: '#90BD3C',
           1: '#F2A81D',
           2: '#FD4000'
         }
 
         var data = $parse(attrs.data)($scope);
-
-        $scope.colors = data.map(function(x){
-          return colors[x];
+        $scope.colours = data.map(function(x){
+          return colours[x];
         });
 
       },

@@ -16,7 +16,8 @@
         </div>
         <div class="item item-divider">
             <small>Last five days:</small>
-            <trend style="float:right" data="[0, 1, 2]"></trend>
+            {{ suggestion.history }}
+            <trend style="float:right" data="suggestion.history"></trend>
         </div>
       </div>
     </div>

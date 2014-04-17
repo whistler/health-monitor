@@ -1,4 +1,4 @@
-app.service('EngineService', ['$http', function($http) {
+app.service('EngineService', ['$http', 'TrendService', function($http, TrendService) {
 
   var testinput = {
     "userinfo": {
@@ -69,19 +69,21 @@ app.service('EngineService', ['$http', function($http) {
 
   // Some fake testing data
   this.recommendations = [];
-  
+
   var _this = this;
-  
+
   $http.post('http://health-engine.herokuapp.com', testinput)
     .success(function(data, status, headers, config){
       _this.recommendations = data;
     });
-    
+
+  var trends = TrendService(testinput);
+
   this.suggestions = {
         'sleep_low': {
           name: 'Insufficient Sleep',
           icon: 'ion-ios7-moon',
-          history: [0, 0, 1, 1, 2],
+          history: [1,2,1,2], //trends['sleep'],
           tips: [
           "A quiet, dark, and cool environment can help promote sound slumber.",
           "Use earplugs, heavy curtains, blackout shades, or an eye mask to block light.",
@@ -94,7 +96,7 @@ app.service('EngineService', ['$http', function($http) {
         'sleep_high': {
           name: 'Oversleeping',
           icon: 'ion-ios7-moon',
-          history: [1, 0, 1, 1, 1],
+          history: trends['sleep'],
           tips: [
           "The use of alcohol and prescription drugs, can make you feel more tired",
           "Put an alarm to wake up in the morning.",
@@ -103,7 +105,7 @@ app.service('EngineService', ['$http', function($http) {
         'activity_low': {
           name: 'Inactive Lifestyle',
           icon: 'ion-ios7-speedometer',
-          history: [0, 2, 2, 0, 1],
+          history: trends['activities'],
           tips: [
           "Take up a sport",
           "Excercise with your friends to help you be motivated",
@@ -112,13 +114,13 @@ app.service('EngineService', ['$http', function($http) {
         'activity_high': {
           name: 'Overactive Lifestyle',
           icon: 'ion-ios7-speedometer',
-          history: [2, 0, 2, 0, 2],
+          history: trends['activities'],
           tips:[ "Make sure you eat a balanced meal"]
         },
         'bloodpressure_low': {
           name: 'Low Bloodpressure',
           icon: 'ion-waterdrop',
-          history: [0, 0, 0, 1, 2],
+          history: trends['bloodPressures'],
           tips: [
           "Low	Drink plenty of water, low blood pressure is often caused by dehydration",
           "Increasing salt intake increases blood volume, but check with your physician to ensure that it is safe to do for you"
@@ -127,7 +129,7 @@ app.service('EngineService', ['$http', function($http) {
         'bloodpressure_high': {
           name: 'High Bloodpressure',
           icon: 'ion-waterdrop',
-          history: [0, 0, 0, 1, 2],
+          history: trends["bloodPressures"],
           tips: [
           "Eat dark chocolate, it helps lower blood pressure",
           "Drink tea instead of coffee",
