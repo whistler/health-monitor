@@ -12,6 +12,7 @@ app.factory("NotificationService", ["$firebase", function($firebase) {
 	});
 	return {
 		show: function(message, title) {
+      console.log("Navigator: " + navigator.userAgent);
 			var ignored_till = $firebase(ref).ignored_till;
 			//alert("ignored_till: " + ignored_till);
 			if (ignored_till < 0 || new Date().getTime() < ignored_till) {
@@ -24,7 +25,13 @@ app.factory("NotificationService", ["$firebase", function($firebase) {
 			if ( !title ) {
 				title = "";
 			}
-			window.plugin.notification.local.add({message: message, title: title, autoCancel: true});
+      if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+        // if running on mobile device
+        window.plugin.notification.local.add({message: message, title: title, autoCancel: true});
+      } else {
+        // if running in a browser
+        alert(title + ": " + message); //this is the browser
+      }
 		},
 		/**
 		  * Sets the ignored_till

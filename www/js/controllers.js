@@ -2,18 +2,15 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
     $scope.recommendations = EngineService.recommendations;
     $scope.$watch(
       function() { return EngineService.recommendations },
-      function(newRecommendations) { 
+      function(newRecommendations) {
         $scope.recommendations = newRecommendations;
-		    NotificationService.show('Test Notification', 'Lifely');
-			// ignore the notification 3 days later
-			//NotificationService.setIgnoredTill(3);
+			  // ignore the notification 3 days later
+			  //NotificationService.setIgnoredTill(3);
       }
     )
-    
-    $scope.suggestions = Object.keys(EngineService.suggestions).map(function (key) {
-      return EngineService.suggestions[key];
-    });
-   
+
+    $scope.suggestions = EngineService.suggestions;
+
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {

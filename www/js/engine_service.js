@@ -1,89 +1,15 @@
 app.service('EngineService', ['$http', 'TrendService', function($http, TrendService) {
 
-  var testinput = {
-    "userinfo": {
-        "age": 45,
-        "gender": "male",
-        "height": 168,
-        "weight": [
-            {
-                "value": 65.3,
-                "date": "2012-04-24"
-            }, {
-                "value": 65.3,
-                "date": "2012-04-17"
-            }, {
-                "value": 65.3,
-                "date": "2012-03-24"
-            }
-        ],
-        "hypertension": true,
-        "diabetes": true,
-        "insomnia": true,
-        "cardio": true
-    },
-    "activities": [{
-        "duration": 7.3,
-        "date": "2012-04-24"
-    }, {
-        "duration": 140,
-        "date": "2012-04-17"
-    }, {
-        "duration": 1430,
-        "date": "2012-03-24"
-    }],
-    "sleep": [{
-        "minutesAsleep": 453,
-        "date": "2012-04-26"
-    }, {
-        "minutesAsleep": 453,
-        "date": "2012-04-25"
-    }, {
-        "minutesAsleep": 453,
-        "date": "2012-04-24"
-    }],
-    "heartBeats": [{
-        "count": 56,
-        "date": "2012-04-24"
-    }, {
-        "count": 60,
-        "date": "2012-04-17"
-    }, {
-        "count": 59,
-        "date": "2012-03-24"
-    }],
-    "bloodPressures": [{
-        "systolic": 100,
-        "diastolic": 71,
-        "date": "2012-04-23"
-    }, {
-        "systolic": 100,
-        "diastolic": 71,
-        "date": "2012-04-22"
-    }, {
-        "systolic": 100,
-        "diastolic": 71,
-        "date": "2012-04-21"
-    }]
-  };
-
   // Some fake testing data
-  this.recommendations = [];
+  this.suggestions = [];
 
   var _this = this;
+  var ENGINE_URL = "http://lifely.herokuapp.com";
 
-  $http.post('http://health-engine.herokuapp.com', testinput)
-    .success(function(data, status, headers, config){
-      _this.recommendations = data;
-    });
-
-  var trends = TrendService(testinput);
-
-  this.suggestions = {
+  var SUGGESTIONS = {
         'sleep_low': {
           name: 'Insufficient Sleep',
           icon: 'ion-ios7-moon',
-          history: [1,2,1,2], //trends['sleep'],
           tips: [
           "A quiet, dark, and cool environment can help promote sound slumber.",
           "Use earplugs, heavy curtains, blackout shades, or an eye mask to block light.",
@@ -96,7 +22,6 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
         'sleep_high': {
           name: 'Oversleeping',
           icon: 'ion-ios7-moon',
-          history: trends['sleep'],
           tips: [
           "The use of alcohol and prescription drugs, can make you feel more tired",
           "Put an alarm to wake up in the morning.",
@@ -105,7 +30,6 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
         'activity_low': {
           name: 'Inactive Lifestyle',
           icon: 'ion-ios7-speedometer',
-          history: trends['activities'],
           tips: [
           "Take up a sport",
           "Excercise with your friends to help you be motivated",
@@ -114,13 +38,11 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
         'activity_high': {
           name: 'Overactive Lifestyle',
           icon: 'ion-ios7-speedometer',
-          history: trends['activities'],
           tips:[ "Make sure you eat a balanced meal"]
         },
         'bloodpressure_low': {
           name: 'Low Bloodpressure',
           icon: 'ion-waterdrop',
-          history: trends['bloodPressures'],
           tips: [
           "Low	Drink plenty of water, low blood pressure is often caused by dehydration",
           "Increasing salt intake increases blood volume, but check with your physician to ensure that it is safe to do for you"
@@ -129,7 +51,6 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
         'bloodpressure_high': {
           name: 'High Bloodpressure',
           icon: 'ion-waterdrop',
-          history: trends["bloodPressures"],
           tips: [
           "Eat dark chocolate, it helps lower blood pressure",
           "Drink tea instead of coffee",
@@ -138,5 +59,45 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
           ]
         }
       };
+
+  var TREND_NAMES = {
+    sleep_low: 'sleep',
+    sleep_high: 'sleep',
+    activity_low: 'activity',
+    activity_high: 'activity',
+    bloodpressure_low: 'bloodpressure',
+    bloodpressure_high: 'bloodpressure'
+  }
+
+  this.getSuggestions = function (inputdata) {
+
+    console.log('getting recommendations');
+
+    // data for trend chart
+    var trends = TrendService(inputdata);
+
+    // query the engine
+    return $http.post(ENGINE_URL, inputdata).then(
+      function(response){
+
+        var suggestions = [];
+
+        for (i in response.data) {
+          var suggestion = response.data[i];
+          var category = suggestion['category'];
+          var tips = SUGGESTIONS[category];
+          var trend_name = TREND_NAMES[category];
+          suggestion['history'] = trends[trend_name];
+          angular.extend(suggestion, tips);
+          console.log(suggestion);
+          suggestions.push(suggestion);
+        }
+        _this.suggestions = suggestions;
+        console.log(suggestions);
+        return suggestions;
+
+      });
+
+  }
 
 }]);
