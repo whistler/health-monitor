@@ -63,15 +63,13 @@ app.service('EngineService', ['$http', 'TrendService', function($http, TrendServ
   var TREND_NAMES = {
     sleep_low: 'sleep',
     sleep_high: 'sleep',
-    activity_low: 'activity',
-    activity_high: 'activity',
-    bloodpressure_low: 'bloodpressure',
-    bloodpressure_high: 'bloodpressure'
+    activity_low: 'activities',
+    activity_high: 'activities',
+    bloodpressure_low: 'bloodPressures',
+    bloodpressure_high: 'bloodPressures'
   }
 
   this.getSuggestions = function (inputdata) {
-
-    console.log('getting recommendations');
 
     // data for trend chart
     var trends = TrendService(inputdata);

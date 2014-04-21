@@ -1,12 +1,9 @@
 app.controller('DashCtrl', function($scope, EngineService, NotificationService) {
     $scope.recommendations = EngineService.recommendations;
     $scope.$watch(
-      function() { return EngineService.recommendations },
-      function(newRecommendations) { 
-        $scope.recommendations = newRecommendations;
-		    NotificationService.show('Test Notification', 'Lifely');
-			// ignore the notification 3 days later
-			//NotificationService.setIgnoredTill(3);
+      function() { return EngineService.suggestions },
+      function(newSuggestions) {
+        $scope.suggestions = newSuggestions;
       }
     )
     
