@@ -53,5 +53,3 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
 	    ]
 	  };
 });
-
-

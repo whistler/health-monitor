@@ -1,14 +1,17 @@
 
 var app = angular.module('lifelyApp', ['ionic','firebase','chartjs'])
 
-.run(function($ionicPlatform) {
+.run(['$ionicPlatform', 'UpdateService', function($ionicPlatform, UpdateService) {
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
-})
+
+  UpdateService.start();
+
+}])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -56,7 +59,7 @@ var app = angular.module('lifelyApp', ['ionic','firebase','chartjs'])
         }
       }
     })
-    
+
     .state('tab.userInfo', {
       url: '/userInfo',
       views: {
