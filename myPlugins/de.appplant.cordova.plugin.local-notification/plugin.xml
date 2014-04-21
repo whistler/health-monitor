@@ -72,6 +72,7 @@
             -->
             <activity android:name="de.appplant.cordova.plugin.localnotification.ReceiverActivity" android:launchMode="singleInstance" />
 			<activity android:name="de.appplant.cordova.plugin.localnotification.DismissActivity" android:launchMode="singleInstance" />
+			<activity android:name="de.appplant.cordova.plugin.localnotification.IgnoreActivity" android:launchMode="singleInstance" />
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -84,7 +85,10 @@
         <source-file src="src/android/Restore.java"           target-dir="src/de/appplant/cordova/plugin/localnotification" />
         <source-file src="src/android/ReceiverActivity.java"  target-dir="src/de/appplant/cordova/plugin/localnotification" />
 		<source-file src="src/android/DismissActivity.java"   target-dir="src/de/appplant/cordova/plugin/localnotification" />
+		<source-file src="src/android/IgnoreActivity.java"   target-dir="src/de/appplant/cordova/plugin/localnotification" />
 		<source-file src="res/android/drawable/dismiss.png"   target-dir="res/drawable" />
+		<source-file src="res/android/drawable/arrow.png"   target-dir="res/drawable" />
+		<source-file src="res/android/layout/ignore_activity.xml"   target-dir="res/layout" />
     </platform>
 
     <!-- wp8 -->

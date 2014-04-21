@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<TextView
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:text="Ignore this notification for:"
+	android:textSize="19dp"
+	android:padding="20dp"
+	/>
+	<RadioGroup android:id="@+id/rg"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_oneDay"
+		android:text="One Day"
+		android:checked="true"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_threeDays"
+		android:text="Three Days"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_oneWeek"
+		android:text="One Week"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_twoWeeks"
+		android:text="Two Weeks"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_oneMonth"
+		android:text="One Month"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+		<RadioButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/ignore_forever"
+		android:text="Forever"
+		android:padding="12dp"
+		android:onClick="setInterval"
+		/>
+	</RadioGroup>
+</LinearLayout>

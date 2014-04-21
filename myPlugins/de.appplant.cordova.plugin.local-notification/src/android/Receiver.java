@@ -189,6 +189,18 @@ public class Receiver extends BroadcastReceiver {
 		Resources res = context.getResources();
 
 		notification.addAction(res.getIdentifier("dismiss", "drawable", context.getPackageName()), "Dismiss", dismissIntent);
+		
+		/* Ignore button */
+		Bundle data_ignore = new Bundle();
+		data_ignore.putInt(Receiver.NOTIFICATION_ID, id);
+
+		Intent intent_ignore = new Intent(context, IgnoreActivity.class);
+		intent_ignore.putExtras(data_ignore);
+		
+		requestCode = new Random().nextInt();
+		PendingIntent ignoreIntent = PendingIntent.getActivity(context, requestCode, intent_ignore, PendingIntent.FLAG_CANCEL_CURRENT);
+
+		notification.addAction(res.getIdentifier("arrow", "drawable", context.getPackageName()), "Ignore", ignoreIntent);
 
 		Notification noti = null;
 
