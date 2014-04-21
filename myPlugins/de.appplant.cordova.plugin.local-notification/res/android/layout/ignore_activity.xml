@@ -11,57 +11,58 @@
 	android:textSize="19dp"
 	android:padding="20dp"
 	/>
-	<RadioGroup android:id="@+id/rg"
-		android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-		<RadioButton
-		android:layout_width="wrap_content"
+	<LinearLayout
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="center_horizontal">
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_oneDay"
 		android:text="One Day"
-		android:checked="true"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-		<RadioButton
-		android:layout_width="wrap_content"
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_threeDays"
 		android:text="Three Days"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-		<RadioButton
-		android:layout_width="wrap_content"
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_oneWeek"
 		android:text="One Week"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-		<RadioButton
-		android:layout_width="wrap_content"
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_twoWeeks"
 		android:text="Two Weeks"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-		<RadioButton
-		android:layout_width="wrap_content"
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_oneMonth"
 		android:text="One Month"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-		<RadioButton
-		android:layout_width="wrap_content"
+		<Button
+		android:layout_width="180dp"
 		android:layout_height="wrap_content"
 		android:id="@+id/ignore_forever"
 		android:text="Forever"
-		android:padding="12dp"
+		android:layout_margin="6dp"
 		android:onClick="setInterval"
 		/>
-	</RadioGroup>
+	</LinearLayout>
 </LinearLayout>
