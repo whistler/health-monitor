@@ -12,3 +12,11 @@
 .float-right {
   float: right;
 }
+
+canvas{
+	margin-top: 20%;
+	margin-left:5%;
+ 	width: 90% !important;
+ 	height: 90% !important;
+ 	overflow: scroll; 
+ }

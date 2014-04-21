@@ -1,5 +1,5 @@
 
-var app = angular.module('lifelyApp', ['ionic','firebase'])
+var app = angular.module('lifelyApp', ['ionic','firebase','chartjs'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -37,12 +37,22 @@ var app = angular.module('lifelyApp', ['ionic','firebase'])
       }
     })
 
-    .state('tab.friends', {
+    /*.state('tab.friends', {
       url: '/friends',
       views: {
         'tab-friends': {
           templateUrl: 'templates/tab-friends.html',
           controller: 'FriendsCtrl'
+        }
+      }
+    })*/
+    
+   .state('tab.friends', {
+      url: '/friends',
+      views: {
+        'tab-friends': {
+          templateUrl: 'templates/trend-graph.html',
+          controller: 'GraphCtrl'
         }
       }
     })
