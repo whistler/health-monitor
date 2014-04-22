@@ -16,7 +16,7 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
 })
 
 .controller('UserInfoCtrl', function($scope, UserInfoService) {
-     UserInfoService.$bind($scope, "userData");
+     UserInfoService.getFire().$bind($scope, "userData");
 })
 
 .controller('GraphCtrl', function ($scope) {

@@ -10,5 +10,9 @@ app.factory("UserInfoService", ["$firebase", function($firebase) {
 	  email: 'health-monitor@googlegroups.com',
 	  password: 'teamlifely'
 	});
-    return $firebase(ref);
+    return {
+		getFire:function(){
+			return $firebase(ref);
+		}
+	};
   }]);
