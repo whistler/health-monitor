@@ -22,22 +22,39 @@ app.controller('DashCtrl', function($scope, EngineService, NotificationService) 
 .controller('GraphCtrl', function ($scope) {
 
 	  $scope.lineData = {
-	    labels : ["January","February","March","April","May","June","July"],
+	    labels : ["January","February","March","April"],
 	    datasets : [
 	      {
-	        fillColor : "rgba(220,220,220,0.5)",
-	        strokeColor : "rgba(220,220,220,1)",
-	        pointColor : "rgba(220,220,220,1)",
+	        fillColor : "rgba(100, 100, 100, 0.05)",
+//	        fillColor :"#FFFFFF",
+	        strokeColor : "#F7464A",
+	        pointColor : "#F7464A",
 	        pointStrokeColor : "#fff",
-	        data : [65,59,90,81,56,55,40]
+	        data : [65,59,90,81]
+	      },
+	      {	        fillColor : "rgba(100, 100, 100, 0.05)",
+//	        fillColor :"#FFFFFF",
+	        strokeColor : "#7D4F6D",
+	        pointColor : "#7D4F6D",
+	        pointStrokeColor : "#fff",
+	        data : [28,48,40,19]
 	      },
 	      {
-	        fillColor : "rgba(151,187,205,0.5)",
-	        strokeColor : "rgba(151,187,205,1)",
-	        pointColor : "rgba(151,187,205,1)",
-	        pointStrokeColor : "#fff",
-	        data : [28,48,40,19,96,27,100]
-	      }
+		        fillColor :"rgba(100, 100, 100, 0.05)",
+		        strokeColor : "#9D9B7F",
+		        pointColor : "#9D9B7F",
+		        pointStrokeColor : "#fff",
+		        data : [89,80,86,90]
+		  },
+	      {
+		        fillColor :"rgba(100, 100, 100, 0.05)",
+		        strokeColor : "#949FB1",
+		        pointColor : "#949FB1",
+		        pointStrokeColor : "#fff",
+		        data : [120,115,130,120]
+		  }
 	    ]
 	  };
+	  
+	// legend(document.getElementById("lineLegend"),  $scope.lineData);
 });
