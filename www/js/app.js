@@ -39,21 +39,10 @@ var app = angular.module('lifelyApp', ['ionic','firebase','chartjs'])
         }
       }
     })
-
-    /*.state('tab.friends', {
-      url: '/friends',
+   .state('tab.trends', {
+      url: '/trends',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
-        }
-      }
-    })*/
-    
-   .state('tab.friends', {
-      url: '/friends',
-      views: {
-        'tab-friends': {
+        'tab-trends': {
           templateUrl: 'templates/trend-graph.html',
           controller: 'GraphCtrl'
         }
