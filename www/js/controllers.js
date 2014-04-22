@@ -1,5 +1,15 @@
-app.controller('DashCtrl', function($scope, SimulatorService) {
+app.controller('DashCtrl', function($scope, SimulatorService, NotificationService) {
 	SimulatorService.getFire().$bind($scope, "simulatorData");
+	$scope.isEmpty=true;
+	$scope.$watch('simulatorData', function(newValue, oldValue) {
+                if (newValue && newValue.$getIndex().length){
+					//get the last index
+					$scope.isEmpty=false;
+					var notification=newValue.$child(newValue.$getIndex()[newValue.$getIndex().length-1]);
+                    NotificationService.show(notification.token, notification.message);
+				}
+            });
+	
 })
 .controller('SettingsCtrl', function($scope) {
 })
