@@ -16,10 +16,20 @@
 canvas{
 	margin-top: 20%;
 	margin-left:5%;
- 	width: 90% !important;
- 	height: 90% !important;
+  	width: 90% !important;
+ 	height: 90% !important; 
  	overflow: scroll; 
  }
 .green{color:green;}
 .red{color:red;}
 .blueIcon{color:blue;}
+
+.legend{
+	padding-left:200px;
+	display:table-cell; 
+	vertical-align:middle;
+} 
+
+.button-light{
+	margin-left:25px;
+}
