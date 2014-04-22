@@ -14,7 +14,7 @@
 }
 
 canvas{
-	margin-top: 20%;
+	margin-top: 5%;
 	margin-left:5%;
   	width: 90% !important;
  	height: 90% !important; 
@@ -25,11 +25,15 @@ canvas{
 .blueIcon{color:blue;}
 
 .legend{
-	padding-left:200px;
-	display:table-cell; 
-	vertical-align:middle;
+	display:inline-block; height: 8px; width:8px;
+	margin-right: 5px;
 } 
 
+.legend-container{
+	width:80%;
+	margin:0 auto;
+	text-align: left;
+}
 .button-light{
 	margin-left:25px;
 }
