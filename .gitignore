@@ -3,5 +3,7 @@ platforms/*
 plugins/*
 !platforms/.gitkeep
 !plugins/.gitkeep
+!platforms/android/res/drawable*
+!platforms/android/res/drawable/icon.png
 *~
 node_modules/*
