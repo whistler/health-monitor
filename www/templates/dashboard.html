@@ -1,22 +1,22 @@
 <ion-view title="Dashboard">
   <ion-content class="has-header padding">
     <div class="list">
-      <div class="card" ng-repeat="suggestion in suggestions">
+      <div class="card" ng-repeat="simulation in simulatorData">
         <div class="item item-divider item-icon-left">
-          <i class="icon {{ suggestion.icon }}"></i>
-          {{ suggestion.name }}
+          <i class="icon {{ simulation.icon }}"></i>
+          {{ simulation.token }}
         </div>
         <div class="item item-text-wrap">
           <ion-slide-box>
-            <ion-slide ng-repeat="tip in suggestion.tips">
-              <div class="box blue">{{ tip }}</div>
+            <ion-slide>
+              <div class="box blue">{{ simulation.message }}</div>
               <br/><br/>
             </ion-slide>
           </ion-slide-box>
         </div>
         <div class="item item-divider">
             <small>Last few days:</small>
-            <trend style="float:right" data="suggestion.history"></trend>
+            <trend style="float:right" data="simulation.trend"></trend>
         </div>
       </div>
 

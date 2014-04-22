@@ -1,16 +1,5 @@
-app.controller('DashCtrl', function($scope, EngineService, NotificationService) {
-    $scope.recommendations = EngineService.recommendations;
-    $scope.$watch(
-      function() { return EngineService.suggestions },
-      function(newSuggestions) {
-        $scope.suggestions = newSuggestions;
-      }
-    )
-    
-    $scope.suggestions = Object.keys(EngineService.suggestions).map(function (key) {
-      return EngineService.suggestions[key];
-    });
-   
+app.controller('DashCtrl', function($scope, SimulatorService) {
+	SimulatorService.getFire().$bind($scope, "simulatorData");
 })
 .controller('SettingsCtrl', function($scope) {
 })

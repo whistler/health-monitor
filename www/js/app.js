@@ -1,16 +1,13 @@
 
 var app = angular.module('lifelyApp', ['ionic','firebase','chartjs'])
 
-.run(['$ionicPlatform', 'UpdateService', function($ionicPlatform, UpdateService) {
+.run(['$ionicPlatform', function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
-
-  UpdateService.start();
-
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {
