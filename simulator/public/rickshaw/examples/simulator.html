@@ -281,7 +281,7 @@ function resumeSimulation(){
            	
            	//send a notification at evening 18pm
        		if(count === 24*4+18){
-    			update("Sleep", "It looks like you didn't sleep well last night. And your blood pressure is higher than normal.",["Eating dark chocolate helps lower blood pressure.","Drink tea instead of coffee."],"ion-ios7-moon orange",[1,1,2,0,1]);
+    			//update("Sleep", "It looks like you didn't sleep well last night. And your blood pressure is higher than normal.",["Eating dark chocolate helps lower blood pressure.","Drink tea instead of coffee."],"ion-ios7-moon orange",[1,1,2,0,1]);
        			//console.log("high_bp_sleep " + "It looks like you didn't sleep well last night. And your blood pressure is higher than normal. Eating dark chocolate helps lower blood pressure." + "[0,0,1,0]");
        		}
            }    
@@ -357,7 +357,60 @@ function resumeSimulation(){
    				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
    				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
         	   }
-        } 
+      	    } 
+   		
+     		// this is the nineth day 
+     		else if((count >= 24*8) && (count < 24*9)){
+            if((count%24 >=0 ) && (count%24< 8 )){ // sleeping
+       			data.activity = Math.floor(random_nums[2] * 2)+20 ;
+       			data.sleep = 4; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+           	}
+           	
+           	else if((count%24 >=7 ) && (count%24 < 12 )){ // blood pressure arise
+   
+   				data.activity = Math.floor(random_nums[2] * 2)+ 20;
+       			data.sleep = 8; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (count%24-6)*1.5;
+           	}
+           	
+           	else{                              // blood pressure stable
+   			    data.activity = Math.floor(random_nums[2] * 2)+20;
+       			data.sleep = 8; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	}
+           }    
+   		
+   		
+ 		// this is the tenth day 
+ 		else if((count >= 24*9) && (count < 24*10)){
+        if((count%24 >=0 ) && (count%24< 8 )){ // sleeping
+   			data.activity = Math.floor(random_nums[2] * 2)+20 ;
+   			data.sleep = 4; 
+   			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+       	}
+       	
+       	else if((count%24 >=7 ) && (count%24 < 12 )){ // heart beat arise
+
+				data.activity = Math.floor(random_nums[2] * 2)+ 20;
+   			data.sleep = 8; 
+   			data.heart_beat=Math.floor(random_nums[2] * 5) + 80 + (count%24-6)*1.5;
+   			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+       	}
+       	
+       	else{                              // heartbeat stable
+		 data.activity = Math.floor(random_nums[2] * 2)+20;
+   			data.sleep = 8; 
+   			data.heart_beat=Math.floor(random_nums[2] * 5) + 80 + (12-7) *1.5;
+   			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+       	}
+       }  
+      		
+   		
    
      	//this is normal routine
 		else
