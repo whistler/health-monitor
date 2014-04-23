@@ -8,8 +8,8 @@
         </div>
         <div class="item item-text-wrap">
           <ion-slide-box>
-            <ion-slide>
-              <div class="box blue">{{ simulation.message }}</div>
+            <ion-slide ng-repeat="tip in simulation.tips">
+              <div class="box blue">{{ tip }}</div>
               <br/><br/>
             </ion-slide>
           </ion-slide-box>

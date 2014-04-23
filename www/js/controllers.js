@@ -6,7 +6,7 @@ app.controller('DashCtrl', function($scope, SimulatorService, NotificationServic
 					//get the last index
 					$scope.isEmpty=false;
 					var notification=newValue.$child(newValue.$getIndex()[newValue.$getIndex().length-1]);
-                    NotificationService.show(notification.token, notification.message);
+                    NotificationService.show(notification.message, notification.token);
 				}
             });
 	
