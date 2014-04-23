@@ -1,0 +1,396 @@
+<!doctype>
+<head>
+	<link type="text/css" rel="stylesheet" href="../src/css/graph.css">
+	<link type="text/css" rel="stylesheet" href="../src/css/detail.css">
+	<link type="text/css" rel="stylesheet" href="../src/css/legend.css">
+	<link type="text/css" rel="stylesheet" href="css/extensions.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="../../bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="../../bootstrap-theme.min.css">
+
+	
+	<script src="../vendor/d3.v3.js"></script>
+	<script src="../rickshaw.js"></script>
+	
+	<script src="../../firebase/firebase.js"></script>
+	<script src="../../angular_fire/firebase-simple-login.js"></script>
+
+</head>
+<body>
+
+<div id="content" class="panel panel-default">
+	
+	 <div class="panel-heading">
+   		 <h1 class="panel-title">Lifely Simulator</h1>
+   		
+   	 </div>	 
+	
+	<form id="side_panel"> 
+	 	<section><div id="legend"></div></section>
+		<div class = "btn-group">
+			<button id="btnPause" type="button" class="btn btn-default" onclick="pauseSimulation()" disabled> Pause</button>
+			<button id="btnResume" type="button" class="btn btn-default" onclick="resumeSimulation()"> Resume</button>
+		</div>
+	</form>
+		
+	<div id="chart"></div>
+</div>
+
+<script>
+
+
+var ref = new Firebase("https://fiery-fire-1643.firebaseio.com/simulator");
+var auth = new FirebaseSimpleLogin(ref, function(error, user) {
+	if (!error)
+	{
+		
+	}
+});
+auth.login('password', {
+  email: 'health-monitor@googlegroups.com',
+  password: 'teamlifely'
+});
+var update = function(token,message,tips, icon, trend){
+	ref.push({"token":token,"message":message,"tips":tips,"icon":icon ,"trend":trend, "shown":false});
+};
+
+
+
+var tv = 400;
+
+// instantiate our graph!
+var graph = new Rickshaw.Graph( {
+	element: document.getElementById("chart"),
+	width: 900,
+	height: 500,
+	renderer: 'line',
+	series: new Rickshaw.Series.FixedDuration([{ name: 'sleep' },{ name: 'activity' },{ name: 'heart_beat' }, { name: 'blood_pressure' }], undefined, {
+		timeInterval: tv,
+		maxDataPoints: 100,
+		timeBase: new Date().getTime() / 1000
+	}) 
+} );
+
+graph.render();
+
+var legend = new Rickshaw.Graph.Legend( {
+	graph: graph,
+	element: document.getElementById('legend')
+
+} );
+
+var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+	graph: graph,
+	legend: legend
+} ); 
+
+// add some data every so often
+
+/* var sleep = [6.8,8.0,8.5,7.5,7.2]
+var activity = [23,24,25,26,27]
+var blood_pressure = [23,24,25,26,27] */
+
+window.onload = function() {
+	resumeSimulation();
+}
+
+var count = 0;
+var i = 0;
+var timerNum = -1;
+
+function pauseSimulation() {
+	countFrame = 0;
+	if(timerNum!=-1){
+    	clearInterval(timerNum);
+	}
+    
+	document.getElementById("btnResume").disabled = false;
+	document.getElementById("btnPause").disabled = true;
+}
+
+function resumeSimulation(){
+	 console.log("resume");
+	 document.getElementById("btnResume").disabled = true;
+	 document.getElementById("btnPause").disabled = false;
+	 timerNum = setInterval( function() {
+/* 	if(count<5)
+		var data = { sleep: sleep[count]};
+		data.two = { activity: activity[count]};
+		data.three ={ pressure: blood_pressure[count]};
+	else */
+	var body = document.getElementById("body");
+	//var service = angular.element(body).injector(["simulatorApp"]).get("FireSyncService");
+        var random_nums = new Array();
+        random_nums[0] = Math.random();
+        random_nums[1] = Math.random();
+        random_nums[2] = Math.random();
+        random_nums[3] = Math.random();
+        
+   /*   console.log("0  " + random_nums[0])
+        console.log("1  " + random_nums[1])
+        console.log("2  " + random_nums[2])
+        console.log("3  " + random_nums[3]) */
+		
+        var data = {};
+
+   		// this is the first day
+        if((count >= 24*0) && (count < 24*1)){
+        	if ((count >=0 ) && (count < 3 )){
+        		data.activity = Math.floor(random_nums[2] * 2)+ 20 ;
+    			data.sleep = 8; 
+    			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+    			data.blood_pressure = Math.floor(random_nums[3] * 3) + 135;
+        	}
+        	
+        	else if((count >=3 ) && (count < 7 )){ // sleeping
+    			data.activity = Math.floor(random_nums[2] * 2)+ 20 ;
+    			data.sleep = 4; 
+    			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+    			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+        	}
+        	
+        	else if((count >=7 ) && (count < 12 )){ // blood pressure arise
+		
+				data.activity = Math.floor(random_nums[2] * 2)+20;
+    			data.sleep = 8; 
+    			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+    			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (count%24-7)*1.5;
+        	}
+        	
+        	else{                              // blood pressure stable
+		
+			    data.activity = Math.floor(random_nums[2] * 2)+20;
+    			data.sleep = 8; 
+    			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+    			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	}
+        	
+        	//send a notification at evening 18pm
+    		if(count === 24*0+18){
+    			update("Sleep", "It looks like you didn't sleep well last night. And your blood pressure is higher than normal.",["Eating dark chocolate helps lower blood pressure.","Drink tea instead of coffee."],"ion-ios7-moon orange",[0,0,0,0,1]);
+    			//console.log("high_bp_sleep " + "It looks like you didn't sleep well last night. And your blood pressure is higher than normal. Eating dark chocolate helps lower blood pressure." + "[0,0,1,0]");
+    		}
+        }    
+   		
+     	// this is the second day
+     	 else if((count >= 24*1) && (count < 24*2)){
+        	   if(count === 24*1+14){
+        		   data.sleep = 8; 
+        		   data.activity = Math.floor(random_nums[2] * 2)+25;
+        		   data.heart_beat=Math.floor(random_nums[2] * 5) + 90;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	   	}
+        	   else if (((count%24)>=0) && ((count%24)<8)){
+        		   data.activity = Math.floor(random_nums[2] * 2)+20 ;
+        		   data.sleep = 4; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	   }
+        	   else {
+        		   data.activity = Math.floor(random_nums[2] * 2)+20;
+        		   data.sleep = 8; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	   }
+   			
+           	  //send a notification at evening second day 18pm
+       		  if(count === 24*1+18){
+	       		update("High Blood Pressure", "Your blood pressure is higher than normal today", ["Add flaxseeds to your diet, 2 tablespoons in your yougurt and speghatti should do the job.","Take a brisk 15 minutes walk every morning."], "ion-waterdrop orange",[0,0,0,1,1]);
+       			//console.log("high_bp " + " Your blood pressure is higher than normal today. Add flaxseeds to your diet, 2 tablespoons in your yougurt and speghatti should do the job." + "[0,1,2,0]");
+       		  }
+        	
+        }   
+     	
+        	// this is the third day
+        	else if((count >= 24*2) && (count < 24*3)){
+  
+        	   if (((count%24)>=0) && ((count%24)<8)){
+        		   data.activity = Math.floor(random_nums[2] * 2) +20 ;
+        		   data.sleep = 4; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	   }
+        	   else {
+        		   data.activity = Math.floor(random_nums[2] * 2)+ 20;
+        		   data.sleep = 8; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5;
+        	   }
+   			
+           	  //send a notification at evening second day 18pm
+       		  if(count === 24*2+18){
+       			   update("High Blood Pressure","Your blood pressure is higher than normal during the last 3 days.",["Do you forget to take your pills?.","Add flaxseeds to your diet, 2 tablespoons in your yougurt."],"ion-medkit red",[0,0,1,1,2]);
+       			   //console.log("high_bp_pills " + " Your blood pressure is higher than normal during the last 3 days. Do you forget to take your pills?." + "[0,1,2,3]");
+       		  }
+        	
+        } 
+   		
+    	// this is the fouth day, blood pressure get back to normal after taking pills
+        	else if((count >= 24*3) && (count < 24*4)){
+  
+        	   if (((count%24)>=0) && ((count%24)<8)){
+        		   data.activity = Math.floor(random_nums[2] * 2) +20 ;
+        		   data.sleep = 4; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   if(Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5-count%24*1.5>135)
+   				   		data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5-count%24*1.5;
+   				   else
+   						data.blood_pressure = Math.floor(random_nums[3] * 5) + 135
+        	   }
+        	   else {
+        		   data.activity = Math.floor(random_nums[2] * 2)+ 20;
+        		   data.sleep = 8; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+        	   }
+        } 
+   
+   
+        	
+     		// this is the fifth day (fourth day the user get back to normal)
+     		else if((count >= 24*4) && (count < 24*5)){
+           	if ((count%24>=0 ) && (count%24< 3 )){
+           		data.activity = Math.floor(random_nums[2] * 2)+20 ;
+       			data.sleep = 8; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+           	}
+           	
+           	else if((count%24 >=3 ) && (count%24< 7 )){ // sleeping
+       			data.activity = Math.floor(random_nums[2] * 2)+20 ;
+       			data.sleep = 4; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+           	}
+           	
+           	else if((count%24 >=7 ) && (count%24 < 12 )){ // blood pressure arise
+   
+   				data.activity = Math.floor(random_nums[2] * 2)+ 20;
+       			data.sleep = 8; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (count%24-6)*1.5;
+           	}
+           	
+           	else{                              // blood pressure stable
+   			    data.activity = Math.floor(random_nums[2] * 2)+20;
+       			data.sleep = 8; 
+       			data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+       			data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	}
+           	
+           	//send a notification at evening 18pm
+       		if(count === 24*4+18){
+    			update("Sleep", "It looks like you didn't sleep well last night. And your blood pressure is higher than normal.",["Eating dark chocolate helps lower blood pressure.","Drink tea instead of coffee."],"ion-ios7-moon orange",[1,1,2,0,1]);
+       			//console.log("high_bp_sleep " + "It looks like you didn't sleep well last night. And your blood pressure is higher than normal. Eating dark chocolate helps lower blood pressure." + "[0,0,1,0]");
+       		}
+           }    
+      		
+        	// this is the sixth day
+        	else if((count >= 24*5) && (count < 24*6)){
+           	   if(count%24 === 16){
+           		   data.sleep = 8; 
+           		   data.activity = Math.floor(random_nums[2] * 2)+25;
+           		   data.heart_beat=Math.floor(random_nums[2] * 5) + 90;
+      			   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	   	}
+           	   else if (((count%24)>=0) && ((count%24)<8)){
+           		   data.activity = Math.floor(random_nums[2] * 2)+20 ;
+           		   data.sleep = 4; 
+      				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+      				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	   }
+           	   else {
+           		   data.activity = Math.floor(random_nums[2] * 2)+ 20;
+           		   data.sleep = 8; 
+      				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+      				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	   }
+      			
+              	  //send a notification at evening second day 18pm
+          		  if(count === 24*5+18){
+	       			update("High Blood Pressure", "Your blood pressure is higher than normal today", ["Add flaxseeds to your diet, 2 tablespoons in your yougurt and speghatti should do the job.","Add flaxseeds to your diet, 2 tablespoons in your yougurt."], "ion-waterdrop orange",[1,2,0,1,1]);
+          			//console.log("high_bp " + " Your blood pressure is higher than normal today. Add flaxseeds to your diet, 2 tablespoons in your yougurt and speghatti should do the job." + "[0,1,2,0]");
+          		  }
+           	
+           }   
+        	
+           	// this is the seventh day
+           	else if((count >= 24*6 )&& (count < 24*7)){
+     
+           	   if (((count%24)>=0) && ((count%24)<8)){
+           		   data.activity = Math.floor(random_nums[2] * 2)+20 ;
+           		   data.sleep = 4; 
+      				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+      				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	   }
+           	   else {
+           		   	   data.activity = Math.floor(random_nums[2] * 2)+20;
+           		  	   data.sleep = 8; 
+      				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+      				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135+ (12-7) *1.5;
+           	   }
+      			
+              	  //send a notification at evening second day 18pm
+          		  if(count === 24*6+18){
+          			update("High Blood Pressure ","Your blood pressure is higher than normal during the last 3 days.", ["You should go to see a doctor.","Take a brisk 15 minutes walk every morning."], "ion-medkit red",[2,0,1,1,2]);
+          			//console.log("high_bp_pills " + " Your blood pressure is higher than normal during the last 3 days. You should go to see a doctor." + "[0,1,2,3]");
+          		  }
+           	
+           }  	
+   		
+    	// this is the eighth day, blood pressure get back to normal after taking pills
+        	else if((count >= 24*7) && (count < 24*8)){
+  
+        	   if (((count%24)>=0) && ((count%24)<8)){
+        		   data.activity = Math.floor(random_nums[2] * 2) +20 ;
+        		   data.sleep = 4; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   if(Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5-count%24*1.5>135)
+   				   		data.blood_pressure = Math.floor(random_nums[3] * 5) + 135 + (12-7)*1.5-count%24*1.5;
+   				   else
+   						data.blood_pressure = Math.floor(random_nums[3] * 5) + 135
+        	   }
+        	   else {
+        		   data.activity = Math.floor(random_nums[2] * 2)+ 20;
+        		   data.sleep = 8; 
+   				   data.heart_beat=Math.floor(random_nums[2] * 5) + 80;
+   				   data.blood_pressure = Math.floor(random_nums[3] * 5) + 135;
+        	   }
+        } 
+   
+     	//this is normal routine
+		else
+		{
+			if(((count%24)>=0) && ((count%24)<8)){
+				data.activity = Math.floor(random_nums[2] * 2)+20 ;
+				data.sleep = 4;
+				data.heart_beat= Math.floor(random_nums[2] * 5) + 80;
+				data.blood_pressure = Math.floor(random_nums[3]*5) + 135;
+			}
+			else{
+			
+				data.activity = Math.floor(random_nums[2] * 2)+20;
+				data.sleep = 8;
+				data.heart_beat= Math.floor(random_nums[2] * 5) + 80;
+				data.blood_pressure = Math.floor(random_nums[3]*5) + 135;
+			}
+		}
+			
+
+		
+	count++;
+	
+	graph.series.addData(data);
+	graph.render();
+
+}, tv );
+
+};
+
+</script>
+	 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> 
+
+</body>
