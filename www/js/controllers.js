@@ -1,12 +1,24 @@
 app.controller('DashCtrl', function($scope, SimulatorService, NotificationService) {
 	SimulatorService.getFire().$bind($scope, "simulatorData");
 	$scope.isEmpty=true;
+	$scope.remove=function(sim)
+	{
+		$scope.simulatorData.$child(sim.$id).$remove();
+	}
 	$scope.$watch('simulatorData', function(newValue, oldValue) {
                 if (newValue && newValue.$getIndex().length){
 					//get the last index
 					$scope.isEmpty=false;
 					var notification=newValue.$child(newValue.$getIndex()[newValue.$getIndex().length-1]);
-                    NotificationService.show(notification.message, notification.token);
+					if(notification.shown===false)
+					{
+						NotificationService.show(notification.message, notification.token);
+						notification.$update({shown:true});
+					}
+				}
+				else
+				{
+					$scope.isEmpty=true;
 				}
             });
 	
